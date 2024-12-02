@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hola Mundo in Colors</title>
+    <!-- Código CSS -->
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .text {
+            font-size: 3rem;
+            font-weight: bold;
+            color: black;
+            cursor: pointer;
+        }
+
+        .bart {
+            margin-top: 20px;
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+    <div class="text" id="holaMundo">Hola Mundo</div>
+    <img src="bart-dancing.gif" alt="Bart Simpson bailando" class="bart">
+
+    <!-- Código JavaScript -->
+    <script>
+        // Colores disponibles
+        const colors = [
+            '#FF5733', '#33FF57', '#3357FF', '#FF33A6', '#F3FF33', 
+            '#33FFF8', '#F833FF', '#A633FF', '#33FF9E', '#FFA633'
+        ];
+
+        // Elemento de texto
+        const textElement = document.getElementById('holaMundo');
+
+        // Cambia el color en secuencia aleatoria
+        textElement.addEventListener('click', () => {
+            const shuffledColors = colors.sort(() => Math.random() - 0.5); // Mezcla aleatoria
+            let index = 0;
+
+            const interval = setInterval(() => {
+                textElement.style.color = shuffledColors[index];
+                index++;
+
+                if (index === shuffledColors.length) {
+                    clearInterval(interval);
+                }
+            }, 500); // 2 segundos por color
+        });
+    </script>
+</body>
+</html>
