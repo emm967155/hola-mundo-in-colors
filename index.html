@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hola Mundo in Colors</title>
-    <!-- Código CSS -->
     <style>
         body {
             display: flex;
@@ -24,7 +23,7 @@
             cursor: pointer;
         }
 
-        .bart {
+        .bart-image {
             margin-top: 20px;
             width: 150px;
         }
@@ -32,32 +31,52 @@
 </head>
 <body>
     <div class="text" id="holaMundo">Hola Mundo</div>
-    <img src="bart-dancing.gif" alt="Bart Simpson bailando" class="bart">
+    <img src="Bart-stand.png" alt="Bart parado" class="bart-image" id="bartImage">
 
-    <!-- Código JavaScript -->
+    <!-- Agregar un elemento <audio> oculto -->
+    <audio id="bartAudio" src="Daft Punk - Crescendolls.mp3" preload="auto"></audio>
     <script>
-        // Colores disponibles
+        // 30 colores disponibles
         const colors = [
-            '#FF5733', '#33FF57', '#3357FF', '#FF33A6', '#F3FF33', 
-            '#33FFF8', '#F833FF', '#A633FF', '#33FF9E', '#FFA633'
+            '#FF5733', '#33FF57', '#3357FF', '#FF33A6', '#F3FF33',
+            '#33FFF8', '#F833FF', '#A633FF', '#33FF9E', '#FFA633',
+            '#8B00FF', '#FF4500', '#FFD700', '#FF1493', '#32CD32',
+            '#00BFFF', '#ADFF2F', '#9400D3', '#FF69B4', '#00FF00',
+            '#1E90FF', '#8A2BE2', '#7FFF00', '#DC143C', '#48D1CC',
+            '#FF6347', '#7B68EE', '#6A5ACD', '#20B2AA', '#EE82EE'
         ];
 
-        // Elemento de texto
+        // Elementos del DOM
         const textElement = document.getElementById('holaMundo');
+        const bartImage = document.getElementById('bartImage');
+        const bartAudio = document.getElementById('bartAudio');
 
-        // Cambia el color en secuencia aleatoria
+        let colorInterval; // Variable para el ciclo de colores
+
+        // Evento click
         textElement.addEventListener('click', () => {
-            const shuffledColors = colors.sort(() => Math.random() - 0.5); // Mezcla aleatoria
+            // Cambiar la imagen a Bart bailando
+            bartImage.src = "bart-dancing.gif";
+            bartImage.alt = "Bart Simpson bailando";
+
+            // Reproducir la música
+            bartAudio.currentTime = 0;
+            bartAudio.play();
+
+            // Cambiar el color del texto en un ciclo indefinido
             let index = 0;
+            colorInterval = setInterval(() => {
+                textElement.style.color = colors[index];
+                index = (index + 1) % colors.length; // Reinicia el índice si llega al final
+            }, 500); // Cambio cada 500 ms
 
-            const interval = setInterval(() => {
-                textElement.style.color = shuffledColors[index];
-                index++;
-
-                if (index === shuffledColors.length) {
-                    clearInterval(interval);
-                }
-            }, 500); // 2 segundos por color
+            // Detener los colores y restaurar la imagen al finalizar la canción
+            bartAudio.onended = () => {
+                clearInterval(colorInterval); // Detener el ciclo de colores
+                textElement.style.color = "black"; // Restaurar color original
+                bartImage.src = "Bart-stand.png"; // Restaurar la imagen original
+                bartImage.alt = "Bart Simpson parado";
+            };
         });
     </script>
 </body>
